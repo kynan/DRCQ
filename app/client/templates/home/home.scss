@@ -37,17 +37,25 @@
   border-radius: 10px;
   opacity: .8;
   overflow: auto;
-  button {
-    background-color: #3A86BE;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 5px;
-    color: #fff;
-    font-weight: bold;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-  }
+}
+
+.about {
+  z-index: 2;
+  bottom: 10px;
+  left: 10px;
+  position: absolute;
+}
+
+button {
+  background-color: #3A86BE;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  font-size: 1.25em;
+  cursor: pointer;
 }
 
 .icons {
