@@ -8,6 +8,12 @@ categories =
     wash:
       category: 'wash'
       iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon_bluebox.png'
+    food:
+      category: 'food'
+      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_food_security_32px_icon_bluebox.png'
+    health:
+      category: 'health'
+      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_health_32px_icon_bluebox.png'
   need:
     shelter:
       category: 'shelter'
@@ -15,6 +21,12 @@ categories =
     wash:
       category: 'wash'
       iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon.png'
+    food:
+      category: 'food'
+      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_food_security_32px_icon.png'
+    health:
+      category: 'health'
+      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_health_32px_icon.png'
 
 Template.Home.events
   'click img.marker': (event, tmpl) ->
