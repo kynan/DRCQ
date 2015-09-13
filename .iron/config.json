@@ -1,0 +1,22 @@
+{
+  "engines": {
+    "html": "jade",
+    "js": "coffee",
+    "css": "scss"
+  },
+
+  "template": {
+    "html": "true",
+    "js": "true",
+    "css": "true"
+  },
+
+  "route": {
+    "controller": "true",
+    "template": "true"
+  },
+
+  "generator": {
+    "comments": "true"
+  }
+}
