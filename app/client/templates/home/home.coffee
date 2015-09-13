@@ -40,11 +40,9 @@ Template.Home.helpers
     return val.toFixed 4
 
 Template.Home.onCreated ->
-  this.addMarker = new ReactiveVar null
+  @addMarker = new ReactiveVar
 
 Template.Home.onRendered ->
-  self = this
-
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images'
 
   harwell = [51.5645499, -1.3229768]
@@ -69,8 +67,8 @@ Template.Home.onRendered ->
   L.control.layers({}, groups).addTo map
 
   # Double click to add markers
-  map.on 'dblclick', (event) ->
-    self.addMarker.set event.latlng
+  map.on 'dblclick', (event) =>
+    @addMarker.set event.latlng
 
   query = Markers.find()
   query.observe
