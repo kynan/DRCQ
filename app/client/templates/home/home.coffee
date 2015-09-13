@@ -34,6 +34,10 @@ Template.Home.events
   'click button#dismiss': (event, tmpl) ->
     tmpl.confirmed.set true
 
+  'click button#about': (event, tmpl) ->
+    tmpl.addMarker.set null
+    tmpl.about.set if tmpl.about.get() then null else true
+
 Template.Home.helpers
   categories: ->
     (val for key, val of categories)
@@ -43,10 +47,13 @@ Template.Home.helpers
     return val.toFixed 4
   confirmed: ->
     Template.instance().confirmed.get()
+  about: ->
+    Template.instance().about.get()
 
 Template.Home.onCreated ->
   @addMarker = new ReactiveVar
   @confirmed = new ReactiveVar
+  @about = new ReactiveVar
 
 Template.Home.onRendered ->
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images'
@@ -75,6 +82,7 @@ Template.Home.onRendered ->
   # Double click to add markers
   map.on 'dblclick', (event) =>
     @addMarker.set event.latlng
+    @about.set null
 
   query = Markers.find()
   query.observe

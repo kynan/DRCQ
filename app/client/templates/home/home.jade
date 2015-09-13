@@ -24,3 +24,13 @@ template(name='Home')
           .label Need
           each categories
             img.marker(src='{{need}}', category='{{category}}', type='need', title='{{category}}')
+
+  if about
+    .footer
+      .rounded
+        p
+        | Built  by #[a(href='https://kynan.github.io') Florian Rathgeber]
+        | (#[a(href='https://twitter.com/frathgeber') @frathgeber]) at the
+        | #[a(href='https://sa.catapult.org.uk') Satellite Applications Catapult]
+        | #[a(href='http://inventorthon.com') #inventorthon],
+        | September 12-13 2015 using #[a(href='https://meteor.com') Meteor].
