@@ -1,25 +1,37 @@
 Meteor.subscribe 'markers'
 
 categories =
-  shelter:
-    category: 'shelter'
-    iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_shelter_32px_icon_bluebox.png'
-  wash:
-    category: 'wash'
-    iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon_bluebox.png'
+  resource:
+    shelter:
+      category: 'shelter'
+      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_shelter_32px_icon_bluebox.png'
+    wash:
+      category: 'wash'
+      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon_bluebox.png'
+  need:
+    shelter:
+      category: 'shelter'
+      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_shelter_32px_icon.png'
+    wash:
+      category: 'wash'
+      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon.png'
 
 Template.Home.events
   'click img.marker': (event, tmpl) ->
     category = event.target.attributes.category.value
+    type = event.target.attributes.type.value
     Markers.insert
       latlng: tmpl.addMarker.get(),
       category: category
-      icon: categories[category]
+      type: type
+      icon: categories[type][category]
     tmpl.addMarker.set null
 
 Template.Home.helpers
-  categories: ->
-    (val for key, val of categories)
+  resource: ->
+    (val for key, val of categories.resource)
+  need: ->
+    (val for key, val of categories.need)
   addMarker: ->
     Template.instance().addMarker.get()
 
@@ -36,7 +48,7 @@ Template.Home.onRendered ->
   map.setView harwell, 13
 
   groups = {}
-  for c of categories
+  for c of categories.resource
     groups[c] = L.layerGroup().addTo map
 
   L.tileLayer.provider('Thunderforest.Outdoors').addTo map

@@ -5,5 +5,9 @@ template(name='Home')
     .footer
       div#selectMarker
         p Add new marker at #{addMarker.lat}, #{addMarker.lng}
-        each categories
-          img.marker(src='{{iconUrl}}', category='{{category}}', title='{{category}}')
+        p Resource:
+          each resource
+            img.marker(src='{{iconUrl}}', category='{{category}}', type='resource', title='{{category}}')
+        p Need:
+          each need
+            img.marker(src='{{iconUrl}}', category='{{category}}', type='need', title='{{category}}')
