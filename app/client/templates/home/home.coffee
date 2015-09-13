@@ -28,6 +28,9 @@ Template.Home.events
       type: type
     tmpl.addMarker.set null
 
+  'click a.removeMarker': (event) ->
+    Markers.remove event.target.id
+
 Template.Home.helpers
   categories: ->
     (val for key, val of categories)
@@ -62,7 +65,7 @@ Template.Home.onRendered ->
   query = Markers.find()
   query.observe
     added: (document) ->
-      text = "#{document.category} #{document.type} at #{document.latlng.lat.toFixed 4}, #{document.latlng.lng.toFixed 4}"
+      text = "#{document.category} #{document.type} at #{document.latlng.lat.toFixed 4}, #{document.latlng.lng.toFixed 4} | <a class='removeMarker' id='#{document._id}' href='#'>remove</a>"
       icon = L.icon iconUrl: categories[document.category][document.type]
       marker = L.marker(document.latlng, icon: icon).bindPopup text
       groups[document.category].addLayer marker
