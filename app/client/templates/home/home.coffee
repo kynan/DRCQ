@@ -31,6 +31,9 @@ Template.Home.events
   'click a.removeMarker': (event) ->
     Markers.remove event.target.id
 
+  'click button#dismiss': (event, tmpl) ->
+    tmpl.confirmed.set true
+
 Template.Home.helpers
   categories: ->
     (val for key, val of categories)
@@ -38,9 +41,12 @@ Template.Home.helpers
     Template.instance().addMarker.get()
   round: (val) ->
     return val.toFixed 4
+  confirmed: ->
+    Template.instance().confirmed.get()
 
 Template.Home.onCreated ->
   @addMarker = new ReactiveVar
+  @confirmed = new ReactiveVar
 
 Template.Home.onRendered ->
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images'
