@@ -1,9 +1,13 @@
 template(name='Home')
+  .header
+    .rounded
+      h2 DRCQ - Disaster Recovery Communication Coordination
+
   div.map(id='map')
 
   if addMarker
     .footer
-      div#selectMarker
+      .rounded
         p Add new marker at #{addMarker.lat}, #{addMarker.lng}
         p Resource:
           each resource
