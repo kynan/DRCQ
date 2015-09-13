@@ -14,7 +14,7 @@ Template.Home.onRendered ->
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images'
 
   harwell = [51.5645499, -1.3229768]
-  map = L.map 'map'
+  map = L.map 'map', doubleClickZoom: false
   map.setView harwell, 13
 
   L.tileLayer.provider('Thunderforest.Outdoors').addTo map
