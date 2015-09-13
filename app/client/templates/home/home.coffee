@@ -1,3 +1,5 @@
+Meteor.subscribe 'markers'
+
 Template.Home.events {}
 
 Template.Home.helpers {}
@@ -22,5 +24,22 @@ Template.Home.onRendered ->
   # Double click to add markers
   map.on 'dblclick', (event) ->
     Markers.insert {latlng: event.latlng}
+
+  query = Markers.find()
+  query.observe
+    added: (document) ->
+      marker = L.marker(document.latlng).addTo(map).on "click", (event) ->
+        map.removeLayer marker
+        Markers.remove _id: document._id
+
+    removed: (oldDocument) ->
+      layers = map._layers
+      key = undefined
+      val = undefined
+      for key of layers
+        val = layers[key]
+        map.removeLayer val if val._latlng?.lat is oldDocument.latlng.lat and val._latlng?.lng is oldDocument.latlng.lng
+      return
+
 
 Template.Home.onDestroyed ->
