@@ -26,7 +26,6 @@ Template.Home.events
       latlng: tmpl.addMarker.get(),
       category: category
       type: type
-      icon: categories[category][type]
     tmpl.addMarker.set null
 
 Template.Home.helpers
