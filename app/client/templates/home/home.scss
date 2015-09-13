@@ -7,5 +7,24 @@
   height: 100%;
 }
 
-.home {
+.footer {
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  width: 100%;
+}
+
+#selectMarker {
+  background-color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  padding: 5px;
+  text-align: center;
+}
+
+img.marker {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
