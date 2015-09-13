@@ -1,2 +1,9 @@
 template(name='Home')
   div.map(id='map')
+
+  if addMarker
+    .footer
+      div#selectMarker
+        p Add new marker at #{addMarker.lat}, #{addMarker.lng}
+        img.marker(src='icons/wash_well_20px_bluebox.png', category='well', title='well')
+        img.marker(src='icons/wash_toilet_20px_bluebox.png', category='toilet', title='toilet')
