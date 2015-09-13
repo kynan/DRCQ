@@ -12,6 +12,9 @@
   z-index: 1;
   top: 10px;
   width: 100%;
+  .rounded {
+    width: 500px;
+  }
 }
 
 .footer {
@@ -19,17 +22,42 @@
   z-index: 1;
   bottom: 10px;
   width: 100%;
+  .rounded {
+    padding: 5px;
+    width: 336px;
+  }
 }
 
 .rounded {
   background-color: #fff;
   margin-left: auto;
   margin-right: auto;
-  width: 500px;
   padding: 2px;
   text-align: center;
   border-radius: 10px;
   opacity: .8;
+  overflow: auto;
+}
+
+.icons {
+  .label {
+    color: #3A86BE;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+  width: 160px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #3A86BE;
+  border-radius: 10px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
 }
 
 img.marker {
