@@ -66,7 +66,10 @@ Template.Home.onRendered ->
   query.observe
     added: (document) ->
       text = "#{document.category} #{document.type} at #{document.latlng.lat.toFixed 4}, #{document.latlng.lng.toFixed 4} | <a class='removeMarker' id='#{document._id}' href='#'>remove</a>"
-      icon = L.icon iconUrl: categories[document.category][document.type]
+      icon = L.icon
+        iconUrl: categories[document.category][document.type]
+        iconSize: [32, 32]
+        iconAnchor: [16, 0]
       marker = L.marker(document.latlng, icon: icon).bindPopup text
       groups[document.category].addLayer marker
 
