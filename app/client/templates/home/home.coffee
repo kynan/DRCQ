@@ -61,9 +61,7 @@ Template.Home.onRendered ->
   query = Markers.find()
   query.observe
     added: (document) ->
-      marker = L.marker(document.latlng, icon: L.icon document.icon).on "click", (event) ->
-        map.removeLayer marker
-        Markers.remove _id: document._id
+      marker = L.marker(document.latlng, icon: L.icon document.icon).bindPopup "#{document.category} #{document.type} at #{document.latlng.lat}, #{document.latlng.lng}"
       groups[document.category].addLayer marker
 
     removed: (oldDocument) ->
