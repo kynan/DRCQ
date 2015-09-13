@@ -19,4 +19,8 @@ Template.Home.onRendered ->
 
   L.tileLayer.provider('Thunderforest.Outdoors').addTo map
 
+  # Double click to add markers
+  map.on 'dblclick', (event) ->
+    Markers.insert {latlng: event.latlng}
+
 Template.Home.onDestroyed ->
