@@ -1,13 +1,25 @@
 Meteor.subscribe 'markers'
 
+categories =
+  shelter:
+    category: 'shelter'
+    iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_shelter_32px_icon_bluebox.png'
+  wash:
+    category: 'wash'
+    iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon_bluebox.png'
+
 Template.Home.events
   'click img.marker': (event, tmpl) ->
+    category = event.target.attributes.category.value
     Markers.insert
       latlng: tmpl.addMarker.get(),
-      icon: {iconUrl: event.target.attributes.src.value}
+      category: category
+      icon: categories[category]
     tmpl.addMarker.set null
 
 Template.Home.helpers
+  categories: ->
+    (val for key, val of categories)
   addMarker: ->
     Template.instance().addMarker.get()
 
@@ -32,7 +44,6 @@ Template.Home.onRendered ->
   query = Markers.find()
   query.observe
     added: (document) ->
-      console.log document
       marker = L.marker(document.latlng, icon: L.icon document.icon).addTo(map).on "click", (event) ->
         map.removeLayer marker
         Markers.remove _id: document._id
