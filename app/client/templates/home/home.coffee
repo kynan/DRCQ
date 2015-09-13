@@ -35,7 +35,12 @@ Template.Home.onRendered ->
   map = L.map 'map', doubleClickZoom: false
   map.setView harwell, 13
 
+  groups = {}
+  for c of categories
+    groups[c] = L.layerGroup().addTo map
+
   L.tileLayer.provider('Thunderforest.Outdoors').addTo map
+  L.control.layers({}, groups).addTo map
 
   # Double click to add markers
   map.on 'dblclick', (event) ->
@@ -44,9 +49,10 @@ Template.Home.onRendered ->
   query = Markers.find()
   query.observe
     added: (document) ->
-      marker = L.marker(document.latlng, icon: L.icon document.icon).addTo(map).on "click", (event) ->
+      marker = L.marker(document.latlng, icon: L.icon document.icon).on "click", (event) ->
         map.removeLayer marker
         Markers.remove _id: document._id
+      groups[document.category].addLayer marker
 
     removed: (oldDocument) ->
       layers = map._layers
