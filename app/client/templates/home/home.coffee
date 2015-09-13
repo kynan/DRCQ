@@ -1,13 +1,22 @@
 Meteor.subscribe 'markers'
 
-Template.Home.events {}
+Template.Home.events
+  'click img.marker': (event, tmpl) ->
+    Markers.insert
+      latlng: tmpl.addMarker.get(),
+      icon: {iconUrl: event.target.attributes.src.value}
+    tmpl.addMarker.set null
 
-Template.Home.helpers {}
+Template.Home.helpers
+  addMarker: ->
+    Template.instance().addMarker.get()
 
-# Home: Lifecycle Hooks
 Template.Home.onCreated ->
+  this.addMarker = new ReactiveVar null
 
 Template.Home.onRendered ->
+  self = this
+
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images'
 
   harwell = [51.5645499, -1.3229768]
@@ -18,12 +27,13 @@ Template.Home.onRendered ->
 
   # Double click to add markers
   map.on 'dblclick', (event) ->
-    Markers.insert {latlng: event.latlng}
+    self.addMarker.set event.latlng
 
   query = Markers.find()
   query.observe
     added: (document) ->
-      marker = L.marker(document.latlng).addTo(map).on "click", (event) ->
+      console.log document
+      marker = L.marker(document.latlng, icon: L.icon document.icon).addTo(map).on "click", (event) ->
         map.removeLayer marker
         Markers.remove _id: document._id
 
@@ -35,6 +45,5 @@ Template.Home.onRendered ->
         val = layers[key]
         map.removeLayer val if val._latlng?.lat is oldDocument.latlng.lat and val._latlng?.lng is oldDocument.latlng.lng
       return
-
 
 Template.Home.onDestroyed ->
