@@ -51,6 +51,16 @@ Template.Home.onRendered ->
   map = L.map 'map', doubleClickZoom: false
   map.setView harwell, 13
 
+  map.locate {setView: true, maxZoom: 16}
+
+  map.on 'locationfound', (e) ->
+    radius = e.accuracy / 2
+    L.marker(e.latlng).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup()
+    L.circle(e.latlng, radius).addTo map
+
+  map.on 'locationerror', (e) ->
+    console.log e.message
+
   groups = {}
   for c of categories
     groups[c] = L.layerGroup().addTo map
