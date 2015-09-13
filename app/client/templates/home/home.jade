@@ -10,7 +10,7 @@ template(name='Home')
   if addMarker
     .footer
       .rounded
-        p Add new marker at #{addMarker.lat}, #{addMarker.lng}
+        p Add new marker at {{round addMarker.lat}}, {{round addMarker.lng}}
         p Resource:
           each categories
             img.marker(src='{{resource}}', category='{{category}}', type='resource', title='{{category}}')

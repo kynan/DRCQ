@@ -33,6 +33,8 @@ Template.Home.helpers
     (val for key, val of categories)
   addMarker: ->
     Template.instance().addMarker.get()
+  round: (val) ->
+    return val.toFixed 4
 
 Template.Home.onCreated ->
   this.addMarker = new ReactiveVar null
@@ -60,7 +62,7 @@ Template.Home.onRendered ->
   query = Markers.find()
   query.observe
     added: (document) ->
-      text = "#{document.category} #{document.type} at #{document.latlng.lat}, #{document.latlng.lng}"
+      text = "#{document.category} #{document.type} at #{document.latlng.lat.toFixed 4}, #{document.latlng.lng.toFixed 4}"
       icon = L.icon iconUrl: categories[document.category][document.type]
       marker = L.marker(document.latlng, icon: icon).bindPopup text
       groups[document.category].addLayer marker
