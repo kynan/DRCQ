@@ -12,8 +12,8 @@ template(name='Home')
       .rounded
         p Add new marker at #{addMarker.lat}, #{addMarker.lng}
         p Resource:
-          each resource
-            img.marker(src='{{iconUrl}}', category='{{category}}', type='resource', title='{{category}}')
+          each categories
+            img.marker(src='{{resource}}', category='{{category}}', type='resource', title='{{category}}')
         p Need:
-          each need
-            img.marker(src='{{iconUrl}}', category='{{category}}', type='need', title='{{category}}')
+          each categories
+            img.marker(src='{{need}}', category='{{category}}', type='need', title='{{category}}')

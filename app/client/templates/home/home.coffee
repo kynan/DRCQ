@@ -1,32 +1,22 @@
 Meteor.subscribe 'markers'
 
 categories =
-  resource:
-    shelter:
-      category: 'shelter'
-      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_shelter_32px_icon_bluebox.png'
-    wash:
-      category: 'wash'
-      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon_bluebox.png'
-    food:
-      category: 'food'
-      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_food_security_32px_icon_bluebox.png'
-    health:
-      category: 'health'
-      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_health_32px_icon_bluebox.png'
-  need:
-    shelter:
-      category: 'shelter'
-      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_shelter_32px_icon.png'
-    wash:
-      category: 'wash'
-      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon.png'
-    food:
-      category: 'food'
-      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_food_security_32px_icon.png'
-    health:
-      category: 'health'
-      iconUrl: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_health_32px_icon.png'
+  shelter:
+    category: 'shelter'
+    resource: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_shelter_32px_icon_bluebox.png'
+    need: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_shelter_32px_icon.png'
+  wash:
+    category: 'wash'
+    resource: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon_bluebox.png'
+    need: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_WASH_32px_icon.png'
+  food:
+    category: 'food'
+    resource: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_food_security_32px_icon_bluebox.png'
+    need: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_food_security_32px_icon.png'
+  health:
+    category: 'health'
+    resource: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_health_32px_icon_bluebox.png'
+    need: 'http://mw1.google.com/crisisresponse/icons/un-ocha/cluster_health_32px_icon.png'
 
 Template.Home.events
   'click img.marker': (event, tmpl) ->
@@ -36,14 +26,12 @@ Template.Home.events
       latlng: tmpl.addMarker.get(),
       category: category
       type: type
-      icon: categories[type][category]
+      icon: categories[category][type]
     tmpl.addMarker.set null
 
 Template.Home.helpers
-  resource: ->
-    (val for key, val of categories.resource)
-  need: ->
-    (val for key, val of categories.need)
+  categories: ->
+    (val for key, val of categories)
   addMarker: ->
     Template.instance().addMarker.get()
 
@@ -60,7 +48,7 @@ Template.Home.onRendered ->
   map.setView harwell, 13
 
   groups = {}
-  for c of categories.resource
+  for c of categories
     groups[c] = L.layerGroup().addTo map
 
   L.tileLayer.provider('Thunderforest.Outdoors').addTo map
@@ -73,7 +61,9 @@ Template.Home.onRendered ->
   query = Markers.find()
   query.observe
     added: (document) ->
-      marker = L.marker(document.latlng, icon: L.icon document.icon).bindPopup "#{document.category} #{document.type} at #{document.latlng.lat}, #{document.latlng.lng}"
+      text = "#{document.category} #{document.type} at #{document.latlng.lat}, #{document.latlng.lng}"
+      icon = L.icon iconUrl: categories[document.category][document.type]
+      marker = L.marker(document.latlng, icon: icon).bindPopup text
       groups[document.category].addLayer marker
 
     removed: (oldDocument) ->
